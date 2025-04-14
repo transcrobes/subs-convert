@@ -1,43 +1,73 @@
 {
-  "name": "subtitle-converter",
-  "version": "3.0.12",
+  "name": "@transcrobes/subs-convert",
+  "version": "4.0.0",
   "description": "Convert subtitles from one format to another",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/subs-convert.cjs",
+  "module": "dist/subs-convert.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/subs-convert.js",
+      "require": "./dist/subs-convert.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "lint": "eslint ./lib/**/*.js",
-    "lint:fix": "eslint ./lib/**/*.js --fix",
-    "test": "mocha '**/*.test.js'"
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "preview": "vite preview",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.ts --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mccauli/subtitle-converter.git"
+    "url": "git+https://github.com/transcrobes/subs-convert.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Anton <anton.melser@outlook.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mccauli/subtitle-converter/issues"
+    "url": "https://github.com/transcrobes/subs-convert/issues"
   },
-  "homepage": "https://github.com/mccauli/subtitle-converter#readme",
+  "homepage": "https://github.com/transcrobes/subs-convert#readme",
   "dependencies": {
-    "chai": "^4.2.0",
-    "joi-browser": "13.4.0",
-    "node-webvtt": "1.5.0",
-    "ramda": "^0.25.0",
-    "subtitles-parser": "0.0.2",
-    "xml2js": "^0.4.19"
+    "joi": "^17.13.3",
+    "ramda": "^0.30.1",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-chai-friendly": "^0.4.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "mocha": "^6.2.1",
-    "precommit-hook-adrise": "^4.2.1"
+    "@eslint/js": "^9.24.0",
+    "@types/node": "^22.14.1",
+    "@types/ramda": "^0.30.2",
+    "@types/xml2js": "^0.4.14",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
+    "eslint": "^9.24.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.6",
+    "vitest": "^3.1.1"
   },
-  "pre-commit": [
-    "lint"
-  ]
+  "keywords": [
+    "subtitles",
+    "converter",
+    "srt",
+    "vtt",
+    "dfxp",
+    "ttml",
+    "scc",
+    "ass"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677"
 }

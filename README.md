@@ -1,8 +1,8 @@
-# subtitle-converter
+# subs-convert
 
-Convert and modify subtitle files with NodeJS.
+Convert and modify subtitle files with TypeScript.
 
-There are many subtitle tools written in node, but there are none that support all popular subtitle and caption formats. `subtitle-converter` builds off of the work of others (most notably `node-captions`, `node-webvtt`, and `subtitles-parser`) in order to ultimately become the only subtitle module necessary to include in your node project.
+This project started as a largely automated (with VSCode Agent Mode) typescript migration of the original project `subtitle-converter`. All dependencies were updated to their latest versions, and build and test were migrated to `vite`/`vitest`. The `node-webvtt` and `subtitles-parser` dependencies were internalised along with tests, and also migrated to TS/Vite.
 
 Currently supported input file types: `dfxp, scc, srt, ttml, vtt, ssa, ass`
 
@@ -12,23 +12,26 @@ All output files are encoded with `UTF-8`. In the future we may support more enc
 
 ## Install
 
-`npm install subtitle-converter`
+```bash
+pnpm install @transcrobes/subs-convert
+```
 
 ## Convert
 
-NodeJS:
-```javascript
-const fs = require('fs')
-const { convert } = require('subtitle-converter');
+TypeScript/ESM:
+```typescript
+import { readFileSync } from 'fs';
+import { convert } from '@transcrobes/subs-convert';
+import type { SubtitleOptions } from '@transcrobes/subs-convert';
 
-const filepath = '/Users/test/Downloads/english_subtitle.srt';
-const subtitleText = fs.readFileSync(filepath, 'utf-8');
+const filepath = '/home/test/Downloads/english_subtitle.srt';
+const subtitleText = readFileSync(filepath, 'utf-8');
 const outputExtension = '.vtt'; // conversion is based on output file extension
-const options = {
+const options: SubtitleOptions = {
   removeTextFormatting: true,
 };
 
-const { subtitle, status } = convert(subtitleText, outputExtension, options)
+const { subtitle, status } = convert(subtitleText, outputExtension, options);
 
 if (status.success) console.log(subtitle);
 else console.log(status);
@@ -36,7 +39,7 @@ else console.log(status);
 
 Browser:
 ```javascript
-const { convert } = require('subtitle-converter');
+import { convert } from '@transcrobes/subs-convert';
 
 function convertFile(fileObject) {
   const reader = new FileReader();
@@ -59,7 +62,7 @@ function convertFile(fileObject) {
 **shiftTimecode** (number) - Pass in the amount of seconds to shift the timecode. If undefined the output timecode will match the input.
 - For example: `5`, `-5`, `5.2`
 
-**sourceFps** (number) - Pass in the FPS of the video file used to create the input subtitle file. If `outputFps` is also included, `subtitle-converter` will shift the timecode accordingly to fit the output FPS.
+**sourceFps** (number) - Pass in the FPS of the video file used to create the input subtitle file. If `outputFps` is also included, `subs-convert` will shift the timecode accordingly to fit the output FPS.
 - For example: `25`, `23.976`, `29.97`
 
 **outputFps** (number) - Pass in the FPS desired for the output subtitle file. `sourceFps` is a required field in order to do FPS conversion.
@@ -67,7 +70,7 @@ function convertFile(fileObject) {
 
 **removeTextFormatting** (boolean) - Default is `false`. If set to `true`, tags such as `<b>` and `{bold}` will be stripped from the text. This may be useful when converting to formats that do not support styling in this manner.
 
-**timecodeOverlapLimiter** (number, boolean) - Default is `false`, allowing overlapping timecode. If a number (in seconds) is included `subtitle-converter` will automatically fix overlapping timecode if the amount of seconds the text overlaps is less than the `timecodeOverlapLimiter`.
+**timecodeOverlapLimiter** (number, boolean) - Default is `false`, allowing overlapping timecode. If a number (in seconds) is included `subs-convert` will automatically fix overlapping timecode if the amount of seconds the text overlaps is less than the `timecodeOverlapLimiter`.
 - If this value is set to `1` and your SRT looks like:
 ```
 1
@@ -95,35 +98,37 @@ World
 
 Returns a `status` object with the following format.
 
-```javascript
-status = {
-  success: true/false,
-  startsAtZeroHour: true/false,
-  reversedTimecodes: [{id, timecode}],
-  overlappingTimecodes: [{id, timecode}],
-  formattedText: [{id, text}],
-  invalidEntries: [{id, timecode, text}],
-  invalidTimecodes: [{id, timecode}],
-  invalidIndices: [{id}],
+```typescript
+interface ValidationStatus {
+  success: boolean;
+  startsAtZeroHour?: boolean;
+  timecodeIssues?: {
+    reversedTimecodes?: { id: string; timecode?: string }[];
+    overlappingTimecodes?: { id: string; timecode?: string }[];
+  };
+  formattedText?: { id: string; text?: string }[];
+  invalidEntries?: { id: string; timecode?: string; text?: string }[];
+  invalidTimecodes?: { id: string; timecode?: string }[];
+  invalidIndices?: { id: string }[];
 }
 ```
 
 Example:
-```javascript
+```typescript
 // Validate with defaults
-const { validate } = require('subtitle-converter');
+import { validate } from '@transcrobes/subs-convert';
 const status = validate(text, '.srt');
 
 console.log(status);
 
 // Validate with options
-const { validate } = require('subtitle-converter');
+import { validate } from '@transcrobes/subs-convert';
 const status = validate(text, '.srt', {
     startsAtZeroHour: true,
     overlappingTimecodes: true
   });
 
-console.log(status.succes);
+console.log(status.success);
 ```
 
 ## Options
@@ -145,3 +150,23 @@ console.log(status.succes);
 **invalidTimecodes** (Always detected) [`.srt`] - checking if there are any timecodes that are not in a valid format.
 
 **invalidIndices** (Always detected) [`.srt`] - checking if there are any non-digit indices before timecodes.
+
+## Development
+
+This project uses:
+- TypeScript for type safety
+- Vite/Rollup for bundling
+- Vitest for testing
+
+### Building
+
+```bash
+pnpm run build
+```
+
+### Testing
+
+```bash
+pnpm test        # Run tests once
+pnpm test:watch  # Run tests in watch mode
+```
