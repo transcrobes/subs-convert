@@ -1,5 +1,5 @@
 import { isEmpty } from "ramda";
-import parse from "../parsers";
+import { parse } from "../parsers";
 import { PARAM_SCHEMA } from "../shared/constants";
 import { ConversionResult, ExportExtension, SubtitleJSON, SubtitleOptions, ValidationOptions } from "../shared/types";
 import { getExtension } from "../shared/utils";
@@ -8,7 +8,7 @@ import validateStandardized from "../validators/standardizedJSON";
 import srt from "./srt";
 import vtt from "./vtt";
 
-function generateOutputData(jsonData: SubtitleJSON, outputExtension: ExportExtension): string {
+export function generateOutputData(jsonData: SubtitleJSON, outputExtension: ExportExtension): string {
   switch (outputExtension) {
     case ".srt":
       return srt(jsonData);

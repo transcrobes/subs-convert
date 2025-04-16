@@ -1,32 +1,32 @@
 import { describe, it, expect } from "vitest";
-import { compile } from "../../webvtt/compiler";
-import { parse } from "../../webvtt/parser";
+import { compileWebVTT } from "../../webvtt/compiler";
+import { parseWebVTT } from "../../webvtt/parser";
 import { ParsedResult } from "@/lib/shared/types";
 
 describe("WebVTT compiler", () => {
   it("should not compile null", () => {
     // @ts-expect-error Testing invalid input
-    expect(() => compile(null)).toThrow(/Input must be non-null/);
+    expect(() => compileWebVTT(null)).toThrow(/Input must be non-null/);
   });
 
   it("should not compile undefined", () => {
     // @ts-expect-error Testing invalid input
-    expect(() => compile()).toThrow(/Input must be non-null/);
+    expect(() => compileWebVTT()).toThrow(/Input must be non-null/);
   });
 
   it("should not compile string", () => {
     // @ts-expect-error Testing invalid input
-    expect(() => compile("a")).toThrow(/Input must be an object/);
+    expect(() => compileWebVTT("a")).toThrow(/Input must be an object/);
   });
 
   it("should not compile array", () => {
     // @ts-expect-error Testing invalid input
-    expect(() => compile([])).toThrow(/Input cannot be array/);
+    expect(() => compileWebVTT([])).toThrow(/Input cannot be array/);
   });
 
   it("should compile object", () => {
     expect(() => {
-      compile({
+      compileWebVTT({
         cues: [
           {
             end: 1,
@@ -45,7 +45,7 @@ describe("WebVTT compiler", () => {
 
   it("should not compile invalid cue", () => {
     expect(() => {
-      compile({
+      compileWebVTT({
         cues: [
           {
             end: 1,
@@ -64,7 +64,7 @@ describe("WebVTT compiler", () => {
 
   it("should compile string identifier", () => {
     expect(() => {
-      compile({
+      compileWebVTT({
         cues: [
           {
             end: 1,
@@ -83,7 +83,7 @@ describe("WebVTT compiler", () => {
 
   it("should compile empty identifier", () => {
     expect(() => {
-      compile({
+      compileWebVTT({
         cues: [
           {
             end: 1,
@@ -116,7 +116,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].identifier = null;
-    expect(() => compile(input as ParsedResult)).not.toThrow();
+    expect(() => compileWebVTT(input as ParsedResult)).not.toThrow();
   });
 
   it("should compile numeric identifier", () => {
@@ -135,7 +135,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].identifier = 1;
-    expect(() => compile(input as ParsedResult)).not.toThrow();
+    expect(() => compileWebVTT(input as ParsedResult)).not.toThrow();
   });
 
   it("should not compile object cue", () => {
@@ -154,7 +154,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].identifier = {};
-    expect(() => compile(input as ParsedResult)).toThrow(/identifier value/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/identifier value/);
   });
 
   it("should compile cues with numeric start", () => {
@@ -173,7 +173,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].start = "0";
-    expect(() => compile(input as ParsedResult)).not.toThrow();
+    expect(() => compileWebVTT(input as ParsedResult)).not.toThrow();
   });
 
   it("should compile cues with numeric end", () => {
@@ -192,7 +192,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].end = "1";
-    expect(() => compile(input as ParsedResult)).not.toThrow();
+    expect(() => compileWebVTT(input as ParsedResult)).not.toThrow();
   });
 
   it("should not compile cues with non-numeric end", () => {
@@ -211,12 +211,12 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].end = "1a";
-    expect(() => compile(input as ParsedResult)).toThrow(/Cue malformed/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Cue malformed/);
   });
 
   it("should not compile equal start and end times", () => {
     expect(() => {
-      compile({
+      compileWebVTT({
         cues: [
           {
             end: 1,
@@ -249,7 +249,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].text = 1;
-    expect(() => compile(input as ParsedResult)).toThrow(/Cue malformed/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Cue malformed/);
   });
 
   it("should not compile non-string styles", () => {
@@ -268,7 +268,7 @@ describe("WebVTT compiler", () => {
       errors: [],
     };
     input.cues[0].styles = null;
-    expect(() => compile(input as ParsedResult)).toThrow(/Cue malformed/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Cue malformed/);
   });
 
   it("should compile properly", () => {
@@ -318,7 +318,7 @@ Det smakar som te.
 Ta en kopp
 `;
 
-    expect(compile(input)).toBe(output);
+    expect(compileWebVTT(input)).toBe(output);
   });
 
   it("should compile with accurate milliseconds", () => {
@@ -368,7 +368,7 @@ Det smakar som te.
 Ta en kopp
 `;
 
-    expect(compile(input)).toBe(output);
+    expect(compileWebVTT(input)).toBe(output);
   });
 
   it("should round properly", () => {
@@ -395,7 +395,7 @@ Ta en kopp varmt te.
 Det är inte varmt.
 `;
 
-    expect(compile(input)).toBe(output);
+    expect(compileWebVTT(input)).toBe(output);
   });
 
   it("should compile string start and end times", () => {
@@ -415,7 +415,7 @@ Det är inte varmt.
     };
     input.cues[0].end = "1";
     input.cues[0].start = "0";
-    expect(() => compile(input as ParsedResult)).not.toThrow();
+    expect(() => compileWebVTT(input as ParsedResult)).not.toThrow();
   });
 
   it("should be reversible", () => {
@@ -435,7 +435,7 @@ Det smakar som te.
 00:02:25.000 --> 00:02:30.000
 Ta en kopp
 `;
-    expect(compile(parse(input))).toBe(input);
+    expect(compileWebVTT(parseWebVTT(input))).toBe(input);
   });
 
   it("should not compile non string styles", () => {
@@ -454,7 +454,7 @@ Ta en kopp
       errors: [],
     };
     input.cues[0].styles = 0;
-    expect(() => compile(input as ParsedResult)).toThrow(/Cue malformed/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Cue malformed/);
   });
 
   it("should not compile non string text", () => {
@@ -473,12 +473,12 @@ Ta en kopp
       errors: [],
     };
     input.cues[0].text = 0;
-    expect(() => compile(input as ParsedResult)).toThrow(/Cue malformed/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Cue malformed/);
   });
 
   it("should not compile NaN start", () => {
     expect(() => {
-      compile({
+      compileWebVTT({
         cues: [
           {
             end: 1,
@@ -503,7 +503,7 @@ Ta en kopp
       errors: [],
     };
     input.cues = [1];
-    expect(() => compile(input as ParsedResult)).toThrow(/Cue malformed/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Cue malformed/);
   });
 
   it("should compile styles", () => {
@@ -529,7 +529,7 @@ Ta en kopp
 Hello world
 `;
 
-    expect(compile(input)).toBe(output);
+    expect(compileWebVTT(input)).toBe(output);
   });
 
   it("should compile metadata", () => {
@@ -563,7 +563,7 @@ X-TIMESTAMP-MAP=LOCAL: 00:00:00.000,MPEGTS:0
 Hello world
 `;
 
-    expect(compile(input)).toBe(output);
+    expect(compileWebVTT(input)).toBe(output);
   });
 
   it("should not compile non-object metadata", () => {
@@ -575,7 +575,7 @@ Hello world
       errors: [],
     };
     input.meta = [];
-    expect(() => compile(input as ParsedResult)).toThrow(/Metadata must be an object/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Metadata must be an object/);
   });
 
   it("should not compile non-string metadata values", () => {
@@ -587,7 +587,7 @@ Hello world
       errors: [],
     };
     input.meta = { foo: [] };
-    expect(() => compile(input as ParsedResult)).toThrow(/Metadata value for "foo" must be string/);
+    expect(() => compileWebVTT(input as ParsedResult)).toThrow(/Metadata value for "foo" must be string/);
   });
 
   it("should not compile cues in non-chronological order", () => {
@@ -613,7 +613,7 @@ Hello world
       ],
     };
 
-    expect(() => compile(input)).toThrow(/Cue number \d+ is not in chronological order/);
+    expect(() => compileWebVTT(input)).toThrow(/Cue number \d+ is not in chronological order/);
   });
 
   it("should allow cues that overlap in time", () => {
@@ -639,6 +639,6 @@ Hello world
       ],
     };
 
-    expect(() => compile(input)).not.toThrow();
+    expect(() => compileWebVTT(input)).not.toThrow();
   });
 });

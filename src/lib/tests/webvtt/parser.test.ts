@@ -2,35 +2,35 @@
 import { describe, it, expect } from "vitest";
 import fs from "fs";
 import path from "path";
-import { parse } from "../../webvtt/parser";
+import { parseWebVTT } from "../../webvtt/parser";
 
 describe("WebVTT parser", () => {
   it("should not parse undefined", () => {
     // @ts-expect-error Testing invalid input
-    expect(() => parse()).toThrow(/Input must be a string/);
+    expect(() => parseWebVTT()).toThrow(/Input must be a string/);
   });
 
   it("should not parse the empty subtitle", () => {
-    expect(() => parse("")).toThrow(/WEBVTT/);
+    expect(() => parseWebVTT("")).toThrow(/WEBVTT/);
   });
 
   it("should not parse non-string subtitles", () => {
-    expect(() => parse("")).toThrow(/WEBVTT/);
+    expect(() => parseWebVTT("")).toThrow(/WEBVTT/);
   });
 
   it("should throw when input does not start with WebVTT signature", () => {
-    expect(() => parse("FOO")).toThrow(/WEBVTT/);
+    expect(() => parseWebVTT("FOO")).toThrow(/WEBVTT/);
   });
 
   it("should parse the minimum WebVTT file, w/only signature", () => {
-    expect(parse("WEBVTT").valid).toBe(true);
+    expect(parseWebVTT("WEBVTT").valid).toBe(true);
   });
 
   it("should fail on missing newline after signature", () => {
     const input = `WEBVTT
 Foo
 `;
-    expect(() => parse(input)).toThrow(/blank line/);
+    expect(() => parseWebVTT(input)).toThrow(/blank line/);
   });
 
   it("should fail parsing cue with standalone identifier", () => {
@@ -38,7 +38,7 @@ Foo
 
 1
 `;
-    expect(() => parse(input)).toThrow(/Cue identifier cannot be standalone/);
+    expect(() => parseWebVTT(input)).toThrow(/Cue identifier cannot be standalone/);
   });
 
   it("should fail parsing cue with identifier but no timestamp", () => {
@@ -46,7 +46,7 @@ Foo
 
 1
 a`;
-    expect(() => parse(input)).toThrow(/needs to be followed by timestamp/);
+    expect(() => parseWebVTT(input)).toThrow(/needs to be followed by timestamp/);
   });
 
   it("should fail parsing cue with illegal timestamp", () => {
@@ -55,7 +55,7 @@ a`;
 1
 0 --> 0
 a`;
-    expect(() => parse(input)).toThrow(/Invalid cue timestamp/);
+    expect(() => parseWebVTT(input)).toThrow(/Invalid cue timestamp/);
   });
 
   it("should fail parsing cue with no min in timestamp", () => {
@@ -63,7 +63,7 @@ a`;
 
 00:00.001 --> 00:00.000
 a`;
-    expect(() => parse(input)).toThrow(/Start timestamp greater than end/);
+    expect(() => parseWebVTT(input)).toThrow(/Start timestamp greater than end/);
   });
 
   it("should parse cue with legal timestamp and id", () => {
@@ -72,8 +72,8 @@ a`;
 1
 00:00.000 --> 00:00.001
 a`;
-    expect(parse(input).cues[0].start).toBe(0);
-    expect(parse(input).cues[0].end).toBe(0.001);
+    expect(parseWebVTT(input).cues[0].start).toBe(0);
+    expect(parseWebVTT(input).cues[0].end).toBe(0.001);
   });
 
   it("should parse cue with legal timestamp, no id and text", () => {
@@ -81,8 +81,8 @@ a`;
 
 00:00.000 --> 00:00.001
 a`;
-    expect(parse(input).cues[0].start).toBe(0);
-    expect(parse(input).cues[0].end).toBe(0.001);
+    expect(parseWebVTT(input).cues[0].start).toBe(0);
+    expect(parseWebVTT(input).cues[0].end).toBe(0.001);
   });
 
   it("should parse cue with long hours timestamp", () => {
@@ -90,8 +90,8 @@ a`;
 
 10000:00:00.000 --> 10000:00:00.001
 a`;
-    expect(parse(input).cues[0].start).toBe(36000000);
-    expect(parse(input).cues[0].end).toBe(36000000.001);
+    expect(parseWebVTT(input).cues[0].start).toBe(36000000);
+    expect(parseWebVTT(input).cues[0].end).toBe(36000000.001);
   });
 
   it("should return parsed data about a single cue", () => {
@@ -108,7 +108,7 @@ b`;
       text: "a\nb",
       styles: "align:start line:0%",
     };
-    const res = parse(input);
+    const res = parseWebVTT(input);
 
     expect(res.cues).toHaveLength(1);
     expect(res.cues[0]).toEqual(parsed);
@@ -120,8 +120,8 @@ b`;
 1
 10:00.000 --> 01:00:00.000
 a`;
-    expect(parse(input).cues[0].start).toBe(600);
-    expect(parse(input).cues[0].end).toBe(3600);
+    expect(parseWebVTT(input).cues[0].start).toBe(600);
+    expect(parseWebVTT(input).cues[0].end).toBe(3600);
   });
 
   it("should parse intersecting cues", () => {
@@ -133,11 +133,11 @@ a
 
 00:00:01.000 --> 00:00:13.000
 b`;
-    expect(parse(input).cues).toHaveLength(2);
-    expect(parse(input).cues[0].start).toBe(0);
-    expect(parse(input).cues[0].end).toBe(12);
-    expect(parse(input).cues[1].start).toBe(1);
-    expect(parse(input).cues[1].end).toBe(13);
+    expect(parseWebVTT(input).cues).toHaveLength(2);
+    expect(parseWebVTT(input).cues[0].start).toBe(0);
+    expect(parseWebVTT(input).cues[0].end).toBe(12);
+    expect(parseWebVTT(input).cues[1].start).toBe(1);
+    expect(parseWebVTT(input).cues[1].end).toBe(13);
   });
 
   it("should fail parsing if start equal to end", () => {
@@ -145,7 +145,7 @@ b`;
 
 00:00:00.000 --> 00:00:00.000
 a`;
-    expect(() => parse(input)).toThrow(/End must be greater than start/);
+    expect(() => parseWebVTT(input)).toThrow(/End must be greater than start/);
   });
 
   it("should parse cue with trailing lines", () => {
@@ -155,8 +155,8 @@ a`;
 a
 
 `;
-    expect(parse(input).cues[0].start).toBe(0);
-    expect(parse(input).cues[0].end).toBe(0.001);
+    expect(parseWebVTT(input).cues[0].start).toBe(0);
+    expect(parseWebVTT(input).cues[0].end).toBe(0.001);
   });
 
   it("should parse cue with one digit hours in timestamp", () => {
@@ -164,8 +164,8 @@ a
 
 59:16.403 --> 1:04:13.283
 Chapter 17`;
-    expect(parse(input).cues[0].start).toBe(3556.403);
-    expect(parse(input).cues[0].end).toBe(3853.283);
+    expect(parseWebVTT(input).cues[0].start).toBe(3556.403);
+    expect(parseWebVTT(input).cues[0].end).toBe(3853.283);
   });
 
   it("should allow a text header", () => {
@@ -173,7 +173,7 @@ Chapter 17`;
 
     00:00.000 --> 00:00.001
     a`;
-    expect(parse(input).cues[0].end).toBe(0.001);
+    expect(parseWebVTT(input).cues[0].end).toBe(0.001);
   });
 
   it("should not allow a text header w/o a space or tab after WEBVTT", () => {
@@ -181,7 +181,7 @@ Chapter 17`;
 
     00:00.000 --> 00:00.001
     a`;
-    expect(() => parse(input)).toThrow(/Header comment must start with space or tab/);
+    expect(() => parseWebVTT(input)).toThrow(/Header comment must start with space or tab/);
   });
 
   it("should allow NOTE for comments", () => {
@@ -206,14 +206,14 @@ Chapter 17`;
     3
     00:02:25.000 --> 00:02:30.000
     - Ta en kopp`;
-    expect(parse(input).cues).toHaveLength(3);
+    expect(parseWebVTT(input).cues).toHaveLength(3);
   });
 
   it("should not create any cues when blank", () => {
     const input = `WEBVTT
 
     `;
-    expect(parse(input).cues).toHaveLength(0);
+    expect(parseWebVTT(input).cues).toHaveLength(0);
   });
 
   it("should skip blank text cues", () => {
@@ -224,7 +224,7 @@ Chapter 17`;
     3
     00:02:25.000 --> 00:02:30.000
     - Ta en kopp`;
-    expect(parse(input).cues).toHaveLength(1);
+    expect(parseWebVTT(input).cues).toHaveLength(1);
   });
 
   it("should not return meta by default", () => {
@@ -232,7 +232,7 @@ Chapter 17`;
 
 1
 00:00.000 --> 00:00.001`;
-    const result = parse(input);
+    const result = parseWebVTT(input);
     expect(result.valid).toBe(true);
     expect(result.meta).toBeUndefined();
   });
@@ -244,8 +244,8 @@ Chapter 17`;
 00:00.000 --> 00:00.001
 Options`;
     const options = { meta: true };
-    expect(parse(input, options).cues[0].start).toBe(0);
-    expect(parse(input, options).cues[0].end).toBe(0.001);
+    expect(parseWebVTT(input, options).cues[0].start).toBe(0);
+    expect(parseWebVTT(input, options).cues[0].end).toBe(0.001);
   });
 
   it("should fail if metadata exists but the meta option is not set", () => {
@@ -256,7 +256,7 @@ Language: en
 1
 00:00.000 --> 00:00.001`;
     const options = {};
-    expect(() => parse(input, options)).toThrow(/Missing blank line after signature/);
+    expect(() => parseWebVTT(input, options)).toThrow(/Missing blank line after signature/);
   });
 
   it("should fail if metadata exists but the meta option is false", () => {
@@ -267,7 +267,7 @@ Language: en
 1
 00:00.000 --> 00:00.001`;
     const options = { meta: false };
-    expect(() => parse(input, options)).toThrow(/Missing blank line after signature/);
+    expect(() => parseWebVTT(input, options)).toThrow(/Missing blank line after signature/);
   });
 
   it("should return meta if meta option is true", () => {
@@ -279,7 +279,7 @@ X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0
 1
 00:00.000 --> 00:00.001`;
     const options = { meta: true };
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(true);
     expect(result.meta).toEqual({
@@ -295,7 +295,7 @@ X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0
 1
 00:00.000 --> 00:00.001`;
     const options = { meta: true };
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(true);
     expect(result.meta).toBe(null);
@@ -306,7 +306,7 @@ X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0
 
     1
     00:00.000 --> 00:00.001`;
-    const result = parse(input);
+    const result = parseWebVTT(input);
 
     expect(result.valid).toBe(true);
     expect(result.strict).toBe(true);
@@ -318,7 +318,7 @@ X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0
 
     1
     00:00.000 --> 00:00.001`;
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(true);
     expect(result.strict).toBe(false);
@@ -334,7 +334,7 @@ This text is from a malformed cue. It should not be processed.
 1
 00:00.000 --> 00:00.001
 test`;
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(false);
     expect(result.strict).toBe(false);
@@ -350,7 +350,7 @@ test`;
 00:00.002 --> 00:00.001
 a`;
     const options = { strict: false };
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(false);
     expect(result.errors).toHaveLength(1);
@@ -365,7 +365,7 @@ a`;
 Text Position: 5%
 `;
     const options = { strict: false };
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(true);
   });
@@ -373,7 +373,7 @@ Text Position: 5%
   it("should parse the acid.vtt file w/o errors w/strict parsing off", () => {
     const input = fs.readFileSync(path.join(__dirname, "data/acid.vtt"), "utf8");
     const options = { strict: false };
-    const result = parse(input, options);
+    const result = parseWebVTT(input, options);
 
     expect(result.valid).toBe(false);
     expect(result.errors).toHaveLength(1);
@@ -385,8 +385,8 @@ Text Position: 5%
 
     01:24:39.06 --> 01:24:40.060
 a`;
-    expect(parse(input).cues[0].start).toBe(5079.06);
-    expect(parse(input).cues[0].end).toBe(5080.06);
+    expect(parseWebVTT(input).cues[0].start).toBe(5079.06);
+    expect(parseWebVTT(input).cues[0].end).toBe(5080.06);
   });
 
   it("should not throw unhandled error on malformed input in non strict mode", () => {
@@ -399,7 +399,7 @@ a`;
 
 ...mission.
 `;
-    const result = parse(input, { strict: false });
+    const result = parseWebVTT(input, { strict: false });
 
     expect(result.valid).toBe(false);
     expect(result.errors).toHaveLength(2);
@@ -417,6 +417,6 @@ a`;
 
 ...mission.
 `;
-    expect(() => parse(input)).toThrow(/Invalid cue timestamp/);
+    expect(() => parseWebVTT(input)).toThrow(/Invalid cue timestamp/);
   });
 });

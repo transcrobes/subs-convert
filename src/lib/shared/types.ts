@@ -137,5 +137,7 @@ export interface SrtAccumulator {
   status: ValidationStatus;
 }
 
-export type ParseExtension = ".srt" | ".vtt" | ".dfxp" | ".ttml" | ".scc" | ".ass";
-export type ExportExtension = ".srt" | ".vtt";
+export const PARSE_EXTENSIONS = [".srt", ".vtt", ".dfxp", ".ttml", ".scc", ".ass"] as const;
+export type ParseExtension = (typeof PARSE_EXTENSIONS)[number];
+export const EXPORT_EXTENSIONS = [".srt", ".vtt"] as const;
+export type ExportExtension = (typeof EXPORT_EXTENSIONS)[number];

@@ -15,7 +15,7 @@ export class ParserError extends Error {
 
 const TIMESTAMP_REGEXP = /([0-9]+)?:?([0-9]{2}):([0-9]{2}\.[0-9]{2,3})/;
 
-export function parse(input: string, options: ParserOptions = {}): ParsedResult {
+export function parseWebVTT(input: string, options: ParserOptions = {}): ParsedResult {
   const { meta = false, strict = true } = options;
 
   if (typeof input !== "string") {

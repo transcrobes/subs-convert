@@ -4,10 +4,10 @@
  * WebVTT Segmenter implementation
  */
 import { WebVTTCue as Cue, Segment } from "../shared/types";
-import { parse } from "./parser";
+import { parseWebVTT } from "./parser";
 
-export function segment(input: string, segmentLength = 10): Segment[] {
-  const parsed = parse(input);
+export function segmentWebVTT(input: string, segmentLength = 10): Segment[] {
+  const parsed = parseWebVTT(input);
   const segments: Segment[] = [];
 
   let cues: Cue[] = [];

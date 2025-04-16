@@ -1,16 +1,16 @@
 /**
  * WebVTT module exports
  */
-import { parse, ParserError } from "./parser";
-import { compile, CompilerError } from "./compiler";
-import { segment } from "./segmenter";
+import { parseWebVTT, ParserError } from "./parser";
+import { compileWebVTT, CompilerError } from "./compiler";
+import { segmentWebVTT } from "./segmenter";
 import { hlsSegment, hlsSegmentPlaylist } from "./hls";
 
 export {
   // Main functions
-  parse,
-  compile,
-  segment,
+  parseWebVTT,
+  compileWebVTT,
+  segmentWebVTT,
 
   // HLS-related functions
   hlsSegment,

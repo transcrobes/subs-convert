@@ -2,10 +2,10 @@
  * WebVTT HLS (HTTP Live Streaming) implementation
  */
 import { WebVTTCue as Cue, HlsSegment } from "../shared/types";
-import { segment } from "./segmenter";
+import { segmentWebVTT } from "./segmenter";
 
 export function hlsSegment(input: string, segmentLength?: number, startOffset: string = "900000"): HlsSegment[] {
-  const segments = segment(input, segmentLength);
+  const segments = segmentWebVTT(input, segmentLength);
   const result: HlsSegment[] = [];
 
   segments.forEach((seg, i) => {
@@ -22,7 +22,7 @@ ${printableCues(seg.cues)}
 }
 
 export function hlsSegmentPlaylist(input: string, segmentLength?: number): string {
-  const segmented = segment(input, segmentLength);
+  const segmented = segmentWebVTT(input, segmentLength);
 
   const printable = printableSegments(segmented);
   const longestSegment = Math.round(findLongestSegment(segmented));

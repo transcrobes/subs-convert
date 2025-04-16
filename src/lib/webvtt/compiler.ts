@@ -13,7 +13,7 @@ export class CompilerError extends Error {
   }
 }
 
-export function compile(input: ParsedResult): string {
+export function compileWebVTT(input: ParsedResult): string {
   if (!input) {
     throw new CompilerError("Input must be non-null");
   }

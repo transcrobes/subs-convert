@@ -1,4 +1,4 @@
-import { compile } from "../webvtt";
+import { compileWebVTT } from "../webvtt";
 import { microsecondsToSeconds } from "../shared/utils";
 import { SubtitleJSON, ParsedResult } from "../shared/types";
 
@@ -26,7 +26,7 @@ function format(subtitleJSON: SubtitleJSON): ParsedResult {
 
 function vtt(subtitleJSON: SubtitleJSON): string {
   const formattedJSON = format(subtitleJSON);
-  return compile(formattedJSON);
+  return compileWebVTT(formattedJSON);
 }
 
 export default vtt;

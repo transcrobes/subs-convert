@@ -1,7 +1,7 @@
 import { SUBTITLE_SCHEMA } from "../shared/constants";
 import { ParsedResult, ParseResult, SubtitleJSON, SubtitleOptions, ValidationStatus } from "../shared/types";
 import { cleanUpText, secondsToMicroseconds } from "../shared/utils";
-import { parse } from "../webvtt";
+import { parseWebVTT } from "../webvtt";
 
 function standardize(subtitleJSON: ParsedResult, options: SubtitleOptions = {}): SubtitleJSON {
   const { removeTextFormatting = false } = options;
@@ -43,7 +43,7 @@ function vtt(subtitleText: string, options: SubtitleOptions = {}): ParseResult {
     invalidTimecodes: [],
     invalidIndices: [],
   };
-  const subtitleJSON = parse(subtitleText, { meta: true });
+  const subtitleJSON = parseWebVTT(subtitleText, { meta: true });
   const { error, value } = SUBTITLE_SCHEMA.validate(standardize(subtitleJSON, options), { abortEarly: false });
   if (error) {
     throw new Error(error.details.map((d) => d.message).join(", "));

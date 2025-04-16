@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { parse } from "../../webvtt/parser";
-import { segment } from "../../webvtt/segmenter";
+import { parseWebVTT } from "../../webvtt/parser";
+import { segmentWebVTT } from "../../webvtt/segmenter";
 
 describe("WebVTT segment", () => {
   it("should not segment a single cue", () => {
@@ -8,8 +8,8 @@ describe("WebVTT segment", () => {
 
 00:00.000 --> 00:05.000
 a`;
-    const parsed = parse(input);
-    const segmented = segment(input, 10);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input, 10);
 
     expect(parsed.cues).toHaveLength(1);
     expect(segmented).toHaveLength(1);
@@ -21,7 +21,7 @@ a`;
 
 00:11.000 --> 00:15.000
 a`;
-    const segmented = segment(input, 10);
+    const segmented = segmentWebVTT(input, 10);
     expect(segmented[0].duration).toBe(15);
   });
 
@@ -33,8 +33,8 @@ a
 
 00:10.000 --> 00:19.000
 a`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -52,8 +52,8 @@ a
 
 00:11.000 --> 00:20.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -70,8 +70,8 @@ b`;
 
 01:11.000 --> 01:20.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(1);
     expect(segmented).toHaveLength(1);
@@ -87,8 +87,8 @@ a
 
 00:11.000 --> 00:20.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input, 10);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input, 10);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -107,8 +107,8 @@ a
 
 00:20.100 --> 00:22.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input, 10);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input, 10);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -135,8 +135,8 @@ c
 
 00:21.000 --> 00:31.000
 d`;
-    const parsed = parse(input);
-    const segs = segment(input, 10);
+    const parsed = parseWebVTT(input);
+    const segs = segmentWebVTT(input, 10);
 
     expect(parsed.cues).toHaveLength(4);
     expect(segs).toHaveLength(3);
@@ -164,8 +164,8 @@ a
 
 00:00:19.000 --> 00:00:20.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -184,8 +184,8 @@ a
 
 00:00:19.000 --> 00:00:25.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -210,8 +210,8 @@ c
 
 00:01:50.000 --> 00:01:51.000
 d`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(4);
     expect(segmented).toHaveLength(4);
@@ -233,8 +233,8 @@ a
 
 00:59:59.000 --> 01:00:11.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(2);
@@ -265,8 +265,8 @@ e
 00:01:43.840 --> 00:01:46.800
 f`;
 
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(6);
     expect(segmented).toHaveLength(3);
@@ -322,8 +322,8 @@ f`;
 00:00:28.640 --> 00:00:30.870
 11`;
 
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(12);
     expect(segmented).toHaveLength(3);
@@ -358,8 +358,8 @@ a
 
 00:00:01.000 --> 00:00:13.000
 b`;
-    const parsed = parse(input);
-    const segmented = segment(input);
+    const parsed = parseWebVTT(input);
+    const segmented = segmentWebVTT(input);
 
     expect(parsed.cues).toHaveLength(2);
     expect(segmented).toHaveLength(1);

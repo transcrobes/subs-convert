@@ -1,12 +1,12 @@
 import { isEmpty } from "ramda";
-import parse from "../parsers";
-import validateStandardized from "./standardizedJSON";
+import { parse } from "../parsers";
+import { ParseExtension, SubtitleOptions, ValidationOptions, ValidationStatus } from "../shared/types";
 import { getExtension } from "../shared/utils";
-import { SubtitleOptions, ValidationOptions, ValidationStatus } from "../shared/types";
+import validateStandardized from "./standardizedJSON";
 
 export function validate(
   subtitleText: string,
-  inputExtension?: string,
+  inputExtension?: ParseExtension,
   options: SubtitleOptions & ValidationOptions = {},
 ): ValidationStatus {
   // read inputFile, convert to standardized JSON format

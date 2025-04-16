@@ -1,4 +1,4 @@
-import { SubtitleOptions, ParseResult } from "../shared/types";
+import { SubtitleOptions, ParseResult, ParseExtension } from "../shared/types";
 
 // Import parsers from their TypeScript implementations
 import sccParser from "./scc";
@@ -7,8 +7,11 @@ import ttmlParser from "./ttml";
 import vttParser from "./vtt";
 import assParser from "./ass";
 
- 
-function parse(subtitleText: string, inputExtension: string, options: SubtitleOptions = {}): ParseResult {
+export function parse(
+  subtitleText: string,
+  inputExtension: ParseExtension,
+  options: SubtitleOptions = {},
+): ParseResult {
   switch (inputExtension) {
     case ".srt":
       return srtParser(subtitleText, options);
@@ -28,5 +31,3 @@ function parse(subtitleText: string, inputExtension: string, options: SubtitleOp
       );
   }
 }
-
-export default parse;
