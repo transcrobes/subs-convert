@@ -1,4 +1,5 @@
 import { VALID_EXT_REGEX_ARRAY } from "./extensionRegex";
+import { ParseExtension } from "./types";
 
 export function microsecondsToMilliseconds(microseconds: number): number {
   return microseconds / 1000;
@@ -127,8 +128,8 @@ export function cleanUpText(text: string | undefined, removeTextFormatting = fal
  * @param subtitle The utf-8 string content of any file type.
  * @return One of the extensions from description or undefined
  */
-export function getExtension(subtitle: string): string | undefined {
-  let result: string | undefined;
+export function getExtension(subtitle: string): ParseExtension | undefined {
+  let result: ParseExtension | undefined;
 
   VALID_EXT_REGEX_ARRAY.some((extension) => {
     if (extension.regex.test(subtitle)) result = extension.extension;

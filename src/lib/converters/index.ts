@@ -1,14 +1,14 @@
 import { isEmpty } from "ramda";
 import parse from "../parsers";
 import { PARAM_SCHEMA } from "../shared/constants";
-import { ConversionResult, SubtitleJSON, SubtitleOptions, ValidationOptions } from "../shared/types";
+import { ConversionResult, ExportExtension, SubtitleJSON, SubtitleOptions, ValidationOptions } from "../shared/types";
 import { getExtension } from "../shared/utils";
 import transform from "../transformers";
 import validateStandardized from "../validators/standardizedJSON";
 import srt from "./srt";
 import vtt from "./vtt";
 
-function generateOutputData(jsonData: SubtitleJSON, outputExtension: string): string {
+function generateOutputData(jsonData: SubtitleJSON, outputExtension: ExportExtension): string {
   switch (outputExtension) {
     case ".srt":
       return srt(jsonData);
@@ -21,7 +21,7 @@ function generateOutputData(jsonData: SubtitleJSON, outputExtension: string): st
 
 export function convert(
   subtitleText: string,
-  outputExtension: string,
+  outputExtension: ExportExtension,
   options: SubtitleOptions = {
     // set default options
     timecodeOverlapLimiter: false,
@@ -47,7 +47,7 @@ export function convert(
   // read inputFile, convert to standardized JSON format
   const { data, status: parseStatus } = parse(subtitleText, extension, options);
 
-  if (isEmpty(data.body)) throw Error("Parsed file is empty");
+  if (isEmpty(data.body)) throw new Error("Parsed file is empty");
 
   // run optional transformations
   const result = transform(data.body, options);

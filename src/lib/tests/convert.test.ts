@@ -84,7 +84,7 @@ describe("convert", () => {
 
 describe("ASS", () => {
   it("should throw an error when it cannot parse the keys", () => {
-    expect(() => convert(badASSkeys, ".ass")).toThrow("Failed to parse keys in .ass file");
+    expect(() => convert(badASSkeys, ".srt")).toThrow("Failed to parse keys in .ass file");
   });
 
   it("should have a first entry with index 1", () => {

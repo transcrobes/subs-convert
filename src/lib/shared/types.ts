@@ -136,3 +136,6 @@ export interface SrtAccumulator {
   validEntries: SubtitleEntry[];
   status: ValidationStatus;
 }
+
+export type ParseExtension = ".srt" | ".vtt" | ".dfxp" | ".ttml" | ".scc" | ".ass";
+export type ExportExtension = ".srt" | ".vtt";

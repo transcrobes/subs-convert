@@ -2,6 +2,8 @@
  * Regex Constants for Subtitle Extension Detection
  */
 
+import { ParseExtension } from "./types";
+
 // GENERAL REGEX
 const lineBreak = "(?:\\r\\n|\\n|\\r)";
 
@@ -28,7 +30,7 @@ const assRegex = "^([^]+?)?\\[Script Info\\]";
 const srtRegex = "-->";
 
 export interface ExtensionRegex {
-  extension: string;
+  extension: ParseExtension;
   regex: RegExp;
 }
 
