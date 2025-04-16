@@ -4,8 +4,8 @@
  * We can't use that module because it uses fs,
  * and we want this module to be compatible with browsers as much as nodejs
  * */
-/* eslint-disable max-len */
-/* eslint-disable complexity */
+ 
+ 
 /* eslint-disable no-prototype-builtins */
 
 // Extensive mapping object for SCC commands and characters
@@ -211,7 +211,7 @@ function translateLine(SCCLine: string): void {
   if (!splitLine) return;
 
   const words = splitLine[3].split(" ");
-  // eslint-disable-next-line prefer-destructuring
+   
   timeStamp = splitLine[1];
   frameCount = 0;
   for (wordIdx = 0; wordIdx < words.length; wordIdx += 1) {

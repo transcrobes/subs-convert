@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-tabs */
 export const goodSCC = `
 Scenarist_SCC V1.0
 

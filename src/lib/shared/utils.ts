@@ -74,6 +74,30 @@ export function timecodeToMicroseconds(timecode: string, fps?: number): number {
   );
 }
 
+/**
+ * Converts microseconds to SRT time format (00:00:00,000)
+ * @param microseconds - Time in microseconds
+ * @return {string} - Time in SRT format
+ */
+export function microsecondsToSrtTimestamp(microseconds: number): string {
+  const totalMilliseconds = Math.floor(microseconds / 1000);
+  const ms = totalMilliseconds % 1000;
+  const totalSeconds = Math.floor(totalMilliseconds / 1000);
+  const s = totalSeconds % 60;
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const m = totalMinutes % 60;
+  const h = Math.floor(totalMinutes / 60);
+  return (
+    h.toString().padStart(2, "0") +
+    ":" +
+    m.toString().padStart(2, "0") +
+    ":" +
+    s.toString().padStart(2, "0") +
+    "," +
+    ms.toString().padStart(3, "0")
+  );
+}
+
 export function extractStyling(text: string): string {
   const regexReplace = [
     { regex: /^<br>/m, value: "" }, // remove <br> from beginning of every line

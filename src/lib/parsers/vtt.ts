@@ -1,7 +1,7 @@
-import { parse, ParsedResult } from "../webvtt";
 import { SUBTITLE_SCHEMA } from "../shared/constants";
-import { ParseResult, SubtitleJSON, SubtitleOptions, ValidationStatus } from "../shared/types";
+import { ParsedResult, ParseResult, SubtitleJSON, SubtitleOptions, ValidationStatus } from "../shared/types";
 import { cleanUpText, secondsToMicroseconds } from "../shared/utils";
+import { parse } from "../webvtt";
 
 function standardize(subtitleJSON: ParsedResult, options: SubtitleOptions = {}): SubtitleJSON {
   const { removeTextFormatting = false } = options;

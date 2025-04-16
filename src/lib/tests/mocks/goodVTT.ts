@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-tabs */
 export const goodVTT = `
 WEBVTT
 

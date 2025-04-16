@@ -5,7 +5,7 @@ import shiftTimecodeBySeconds from "./shift_subtitle_timecode";
 import shiftToZeroHour from "./shift_to_zero_hour";
 import { SubtitleEntry, SubtitleOptions } from "../shared/types";
 
-// eslint-disable-next-line complexity
+ 
 function transform(data: SubtitleEntry[], options: SubtitleOptions): SubtitleEntry[] {
   const { timecodeOverlapLimiter, combineOverlapping, shiftTimecode, sourceFps, outputFps, startAtZeroHour } = options;
   let result = data;

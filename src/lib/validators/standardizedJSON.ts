@@ -6,7 +6,7 @@ interface TimecodeIssue {
   text?: string;
 }
 
-/* eslint-disable complexity */
+ 
 function buildStatusObject(options: ValidationOptions): ValidationStatus {
   const status: ValidationStatus = {
     success: true,

@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-tabs */
 export const goodTTML = `
 <tt xml:lang="en"
 xmlns="http://www.w3.org/ns/ttml"

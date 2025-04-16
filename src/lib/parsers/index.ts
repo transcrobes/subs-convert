@@ -7,7 +7,7 @@ import ttmlParser from "./ttml";
 import vttParser from "./vtt";
 import assParser from "./ass";
 
-// eslint-disable-next-line complexity
+ 
 function parse(subtitleText: string, inputExtension: string, options: SubtitleOptions = {}): ParseResult {
   switch (inputExtension) {
     case ".srt":

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { compile } from "../../webvtt/compiler";
 import { parse } from "../../webvtt/parser";
-import { ParsedResult } from "../../webvtt/types";
+import { ParsedResult } from "@/lib/shared/types";
 
 describe("WebVTT compiler", () => {
   it("should not compile null", () => {
@@ -105,7 +105,7 @@ describe("WebVTT compiler", () => {
       cues: [
         {
           end: 1,
-          identifier: "" as any, // Using any for runtime-only tests that would fail type checking
+          identifier: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
           start: 0,
           styles: "",
           text: "Hello world!",
@@ -124,7 +124,7 @@ describe("WebVTT compiler", () => {
       cues: [
         {
           end: 1,
-          identifier: "" as any, // Using any for runtime-only tests that would fail type checking
+          identifier: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
           start: 0,
           styles: "",
           text: "Hello world!",
@@ -143,7 +143,7 @@ describe("WebVTT compiler", () => {
       cues: [
         {
           end: 1,
-          identifier: "" as any, // Using any for runtime-only tests that would fail type checking
+          identifier: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
           start: 0,
           styles: "",
           text: "Hello world!",
@@ -163,7 +163,7 @@ describe("WebVTT compiler", () => {
         {
           end: 1,
           identifier: "",
-          start: 0 as any, // Using any for runtime-only tests that would fail type checking
+          start: 0 as unknown, // Using unknown for runtime-only tests that would fail type checking
           styles: "",
           text: "Hello world!",
         },
@@ -180,7 +180,7 @@ describe("WebVTT compiler", () => {
     const input = {
       cues: [
         {
-          end: 1 as any, // Using any for runtime-only tests that would fail type checking
+          end: 1 as unknown, // Using unknown for runtime-only tests that would fail type checking
           identifier: "",
           start: 0,
           styles: "",
@@ -199,7 +199,7 @@ describe("WebVTT compiler", () => {
     const input = {
       cues: [
         {
-          end: 1 as any, // Using any for runtime-only tests that would fail type checking
+          end: 1 as unknown, // Using unknown for runtime-only tests that would fail type checking
           identifier: "",
           start: 0,
           styles: "",
@@ -241,7 +241,7 @@ describe("WebVTT compiler", () => {
           identifier: "",
           start: 0,
           styles: "",
-          text: "" as any, // Using any for runtime-only tests that would fail type checking
+          text: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
         },
       ],
       valid: true,
@@ -259,7 +259,7 @@ describe("WebVTT compiler", () => {
           end: 1,
           identifier: "",
           start: 0,
-          styles: "" as any, // Using any for runtime-only tests that would fail type checking
+          styles: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
           text: "",
         },
       ],
@@ -402,9 +402,9 @@ Det är inte varmt.
     const input = {
       cues: [
         {
-          end: 1 as any,
+          end: 1 as unknown,
           identifier: "",
-          start: 0 as any,
+          start: 0 as unknown,
           styles: "",
           text: "Hello world!",
         },
@@ -445,7 +445,7 @@ Ta en kopp
           end: 1,
           identifier: "",
           start: 0,
-          styles: "" as any, // Using any for runtime-only tests that would fail type checking
+          styles: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
           text: "Hello world!",
         },
       ],
@@ -465,7 +465,7 @@ Ta en kopp
           identifier: "",
           start: 0,
           styles: "",
-          text: "" as any, // Using any for runtime-only tests that would fail type checking
+          text: "" as unknown, // Using unknown for runtime-only tests that would fail type checking
         },
       ],
       valid: true,
@@ -497,7 +497,7 @@ Ta en kopp
 
   it("should not compile non object cues", () => {
     const input = {
-      cues: [] as any, // Using any for runtime-only tests that would fail type checking
+      cues: [] as unknown, // Using unknown for runtime-only tests that would fail type checking
       valid: true,
       strict: true,
       errors: [],
@@ -568,7 +568,7 @@ Hello world
 
   it("should not compile non-object metadata", () => {
     const input = {
-      meta: {} as any, // Using any for runtime-only tests that would fail type checking
+      meta: {} as unknown, // Using unknown for runtime-only tests that would fail type checking
       cues: [],
       valid: true,
       strict: true,
@@ -580,7 +580,7 @@ Hello world
 
   it("should not compile non-string metadata values", () => {
     const input = {
-      meta: {} as any, // Using any for runtime-only tests that would fail type checking
+      meta: {} as unknown, // Using unknown for runtime-only tests that would fail type checking
       cues: [],
       valid: true,
       strict: true,

@@ -38,6 +38,14 @@
       "@mocks/*": ["lib/tests/mocks/*"]
     }
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "lib", "**/*.test.ts", "src/lib/tests/**/*", "vite.config.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/lib/tests/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib",
+    "vite.config.ts"
+  ]
 }

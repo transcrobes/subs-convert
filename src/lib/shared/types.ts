@@ -33,7 +33,7 @@ export interface SubtitleGlobal {
 export interface SubtitleJSON {
   global?: SubtitleGlobal;
   body: SubtitleEntry[];
-  source?: any;
+  source?: unknown;
 }
 
 export interface SubtitleOptions {
@@ -79,5 +79,60 @@ export interface ParseResult {
 
 export interface ConversionResult {
   subtitle: string;
+  status: ValidationStatus;
+}
+
+/**
+ * WebVTT cue type (for use in webvtt modules)
+ */
+export interface WebVTTCue {
+  identifier: string;
+  start: number; // seconds
+  end: number; // seconds
+  text: string;
+  styles: string;
+}
+
+/**
+ * ParsedResult for WebVTT and similar modules
+ */
+export interface ParsedResult {
+  valid: boolean;
+  strict: boolean;
+  cues: WebVTTCue[];
+  errors: Error[];
+  meta?: Record<string, string> | null;
+}
+
+export interface Segment {
+  duration: number;
+  cues: WebVTTCue[];
+}
+
+export interface HlsSegment {
+  filename: string;
+  content: string;
+}
+
+export interface ParserOptions {
+  meta?: boolean;
+  strict?: boolean;
+}
+
+/**
+ * SRT parsing options (used in srtEntries)
+ */
+export interface SrtEntryOptions {
+  invalidEntries?: boolean;
+  invalidTimecodes?: boolean;
+  invalidIndices?: boolean;
+}
+
+/**
+ * Accumulator for SRT parsing (used in srtEntries)
+ */
+export interface SrtAccumulator {
+  currentIndex: number;
+  validEntries: SubtitleEntry[];
   status: ValidationStatus;
 }

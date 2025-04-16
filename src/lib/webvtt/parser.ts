@@ -1,7 +1,7 @@
 /**
  * See spec: https://www.w3.org/TR/webvtt1/#file-structure
  */
-import { Cue, ParsedResult, ParserOptions } from "./types";
+import { WebVTTCue as Cue, ParsedResult, ParserOptions } from "../shared/types";
 
 export class ParserError extends Error {
   error?: Error;

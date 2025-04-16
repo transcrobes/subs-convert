@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-tabs */
 export const goodDFXP = `
 <?xml version="1.0" encoding="UTF-8"?>
 <tt xml:lang='en' xmlns='http://www.w3.org/2006/10/ttaf1' xmlns:tts='http://www.w3.org/2006/10/ttaf1#style'>

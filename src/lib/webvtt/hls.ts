@@ -1,7 +1,7 @@
 /**
  * WebVTT HLS (HTTP Live Streaming) implementation
  */
-import { Cue, HlsSegment } from "./types";
+import { WebVTTCue as Cue, HlsSegment } from "../shared/types";
 import { segment } from "./segmenter";
 
 export function hlsSegment(input: string, segmentLength?: number, startOffset: string = "900000"): HlsSegment[] {

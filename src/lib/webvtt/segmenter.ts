@@ -1,7 +1,9 @@
+/* global console */
+
 /**
  * WebVTT Segmenter implementation
  */
-import { Cue, Segment } from "./types";
+import { WebVTTCue as Cue, Segment } from "../shared/types";
 import { parse } from "./parser";
 
 export function segment(input: string, segmentLength = 10): Segment[] {

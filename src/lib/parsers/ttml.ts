@@ -8,7 +8,7 @@ interface TTMLSubtitle {
   tt: {
     $: {
       "xml:lang"?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     };
     body: [
       {

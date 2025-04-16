@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-tabs */
 export const goodVTT = `
 WEBVTT
 
@@ -4553,27 +4551,27 @@ NOTE Converted from .srt via srt2vtt: https://github.com/deestan/srt2vtt
 <b>The ultimate secret held sacred
 
 973
-00:49:34.863 --> 00:49:36.130
+00:49:34.863 --> 00:49:36.596
 <b>by the Greeks was this.
 
 974
-00:49:36.163 --> 00:49:38.330
+00:49:36.629 --> 00:49:38.830
 <b>The bull has begotten a serpent
 
 975
-00:49:38.364 --> 00:49:40.429
+00:49:38.863 --> 00:49:40.996
 <b>and the serpent a bull.
 
 976
-00:49:40.463 --> 00:49:42.596
+00:49:41.029 --> 00:49:43.596
 <b>(celestial music)
 
 977
-00:49:42.629 --> 00:49:44.463
+00:49:43.629 --> 00:49:45.463
 <b>The two are interchangeable.
 
 978
-00:49:44.496 --> 00:49:46.696
+00:49:45.496 --> 00:49:46.696
 <b>The bull is symbolized</b>
 <b>by the Taue cross
 
@@ -5344,125 +5342,125 @@ NOTE Converted from .srt via srt2vtt: https://github.com/deestan/srt2vtt
 <b>see things more clearly.
 
 1145
-00:59:01.962 --> 00:59:05.363
+01:00:01.962 --> 01:00:05.363
 <b>These were not angels</b>
 <b>or messengers of light.
 
 1146
-00:59:05.396 --> 00:59:07.862
+01:00:05.396 --> 01:00:07.862
 <b>These were not</b>
 <b>great Greek deities
 
 1147
-00:59:07.895 --> 00:59:10.129
+01:00:07.895 --> 01:00:10.129
 <b>sat on high and</b>
 <b>issuing commands.
 
 1148
-00:59:10.162 --> 00:59:13.763
+01:00:10.162 --> 01:00:13.763
 <b>They were not the many faced</b>
 <b>Hindu or Egyptian gods.
 
 1149
-00:59:13.795 --> 00:59:16.496
+01:00:13.795 --> 01:00:16.496
 <b>These were beings</b>
 <b>from another planet
 
 1150
-00:59:16.529 --> 00:59:18.730
+01:00:16.529 --> 01:00:18.730
 <b>who came here with</b>
 <b>superior technology.
 
 1151
-00:59:18.763 --> 00:59:22.862
+01:00:18.763 --> 01:00:22.862
 <b>(celestial music)
 
 1152
-00:59:22.895 --> 00:59:25.363
+01:00:22.895 --> 01:00:25.363
 <b>They helped mankind</b>
 <b>start civilization.
 
 1153
-00:59:25.396 --> 00:59:28.463
+01:00:25.396 --> 01:00:28.463
 <b>They bred with us and they</b>
 <b>fought with each other.
 
 1154
-00:59:30.563 --> 00:59:32.762
+01:00:30.563 --> 01:00:32.762
 <b>Most we are told left.
 
 1155
-00:59:34.296 --> 00:59:36.862
+01:00:34.296 --> 01:00:36.862
 <b>But the hybrid race</b>
 <b>remained among us
 
 1156
-00:59:36.895 --> 00:59:38.262
+01:00:36.895 --> 01:00:38.262
 <b>as special people.
 
 1157
-00:59:39.795 --> 00:59:42.895
+01:00:39.795 --> 01:00:42.895
 <b>And now with every passing day
 
 1158
-00:59:42.929 --> 00:59:45.029
+01:00:42.929 --> 01:00:45.029
 <b>NASA tells us they</b>
 <b>have discovered
 
 1159
-00:59:45.062 --> 00:59:48.463
+01:00:45.062 --> 01:00:48.463
 <b>another earth like planet</b>
 <b>that could sustain life.
 
 1160
-00:59:50.929 --> 00:59:53.895
+01:00:50.929 --> 01:00:53.895
 <b>They find ancient</b>
 <b>rivers and lakes on Mars
 
 1161
-00:59:53.929 --> 00:59:56.962
+01:00:53.929 --> 01:00:56.962
 <b>and even fatty acids</b>
 <b>within the Martian soil.
 
 1162
-00:59:58.929 --> 01:00:01.929
+01:00:58.929 --> 01:01:01.929
 <b>They alter their</b>
 <b>equations on the existence
 
 1163
-01:00:01.962 --> 01:00:04.262
+01:01:01.962 --> 01:01:04.262
 <b>of alien life on a weekly basis.
 
 1164
-01:00:07.729 --> 01:00:10.363
+01:01:07.729 --> 01:01:10.363
 <b>Even they are</b>
 <b>growing more and more
 
 1165
-01:00:10.396 --> 01:00:14.296
+01:01:10.396 --> 01:01:14.296
 <b>aware that soon they will</b>
 <b>discover something special.
 
 1166
-01:00:14.329 --> 01:00:17.729
+01:01:14.329 --> 01:01:17.729
 <b>The question is will</b>
 <b>we awaken the ancient
 
 1167
-01:00:17.762 --> 01:00:21.062
+01:01:17.762 --> 01:01:21.062
 <b>invaders and will</b>
 <b>they return if they're
 
 1168
-01:00:21.096 --> 01:00:22.663
+01:01:21.096 --> 01:01:22.663
 <b>not already here.
 
 1169
-01:00:22.696 --> 01:00:27.696
+01:01:22.696 --> 01:01:27.696
 <b>(celestial music)
 
 1170
-01:00:33.329 --> 01:00:38.329
+01:01:33.329 --> 01:01:38.329
 <b>(electronic music)
 
 

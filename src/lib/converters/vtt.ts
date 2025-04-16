@@ -1,7 +1,6 @@
 import { compile } from "../webvtt";
 import { microsecondsToSeconds } from "../shared/utils";
-import { SubtitleJSON } from "../shared/types";
-import { ParsedResult } from "../webvtt/types";
+import { SubtitleJSON, ParsedResult } from "../shared/types";
 
 function format(subtitleJSON: SubtitleJSON): ParsedResult {
   return {

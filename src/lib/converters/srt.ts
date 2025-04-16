@@ -1,20 +1,9 @@
 import { toSrt } from "../subtitles-parser";
-import { SubtitleJSON } from "../shared/types";
-import { microsecondsToMilliseconds } from "../shared/utils";
+import { SubtitleJSON, SubtitleEntry } from "../shared/types";
 
-interface SrtEntry {
-  id: string;
-  startTime: number;
-  endTime: number;
-  text: string;
-}
-
-function format(subtitleJSON: SubtitleJSON): SrtEntry[] {
+function format(subtitleJSON: SubtitleJSON): SubtitleEntry[] {
   return subtitleJSON.body.map((line) => ({
-    id: line.id,
-    startTime: microsecondsToMilliseconds(line.startMicro),
-    endTime: microsecondsToMilliseconds(line.endMicro),
-    text: line.text,
+    ...line,
   }));
 }
 

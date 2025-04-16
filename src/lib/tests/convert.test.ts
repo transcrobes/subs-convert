@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { convert } from "@lib/converters";
 import { fromSrt } from "../subtitles-parser";
 import { head, pipe, split } from "ramda";
+import { microsecondsToMilliseconds } from "@lib/shared/utils";
 
 // Import mocks with proper paths and file extensions
 import { badTextMultipleReturns } from "@lib/tests/mocks/badTextMultipleReturns.ts";
@@ -24,7 +25,7 @@ describe("convert", () => {
   // INDEX
   it("should resequence indices", () => {
     const { subtitle } = convert(badIndexSequence, ".srt");
-    const parsed = fromSrt(subtitle, true);
+    const parsed = fromSrt(subtitle);
     expect(parsed[0].text).toBe("Beijing, hazy sky");
 
     // Handle all Unicode apostrophe variations
@@ -40,27 +41,27 @@ describe("convert", () => {
 
   // TIMECODE
   it("should shift timecode by seconds", () => {
-    const initial = fromSrt(goodSRT.toString(), true);
-    expect(initial[0].startTime).toBe(5446);
-    expect(initial[0].endTime).toBe(10817);
+    const initial = fromSrt(goodSRT.toString());
+    expect(microsecondsToMilliseconds(initial[0].startMicro)).toBe(5446);
+    expect(microsecondsToMilliseconds(initial[0].endMicro)).toBe(10817);
 
     const { subtitle } = convert(goodSRT, ".srt", { shiftTimecode: 3 });
-    const parsed = fromSrt(subtitle, true);
+    const parsed = fromSrt(subtitle);
 
-    expect(parsed[0].startTime).toBe(8446);
-    expect(parsed[0].endTime).toBe(13817);
+    expect(microsecondsToMilliseconds(parsed[0].startMicro)).toBe(8446);
+    expect(microsecondsToMilliseconds(parsed[0].endMicro)).toBe(13817);
   });
 
   it("should shift timecode by fps", () => {
-    const initial = fromSrt(goodSRT.toString(), true);
-    expect(initial[0].startTime).toBe(5446);
-    expect(initial[0].endTime).toBe(10817);
+    const initial = fromSrt(goodSRT.toString());
+    expect(microsecondsToMilliseconds(initial[0].startMicro)).toBe(5446);
+    expect(microsecondsToMilliseconds(initial[0].endMicro)).toBe(10817);
 
     const { subtitle } = convert(goodSRT, ".srt", { sourceFps: 30, outputFps: 24 });
-    const parsed = fromSrt(subtitle, true);
+    const parsed = fromSrt(subtitle);
 
-    expect(parsed[0].startTime).toBe(6807);
-    expect(parsed[0].endTime).toBe(13521);
+    expect(microsecondsToMilliseconds(parsed[0].startMicro)).toBe(6807);
+    expect(microsecondsToMilliseconds(parsed[0].endMicro)).toBe(13521);
   });
 
   it("should fix timecode overlap", () => {
