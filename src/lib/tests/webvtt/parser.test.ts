@@ -402,9 +402,8 @@ a`;
     const result = parseWebVTT(input, { strict: false });
 
     expect(result.valid).toBe(false);
-    expect(result.errors).toHaveLength(2);
-    expect(result.errors[0].message).toBe("Invalid cue timestamp (cue #1)");
-    expect(result.errors[1].message).toBe("Cue identifier cannot be standalone (cue #2)");
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0].message).toBe("Cue identifier cannot be standalone (cue #1)");
   });
 
   it("should throw a handled error not an unhandled one on malformed input", () => {
@@ -417,6 +416,38 @@ a`;
 
 ...mission.
 `;
-    expect(() => parseWebVTT(input)).toThrow(/Invalid cue timestamp/);
+    expect(() => parseWebVTT(input)).toThrow(/Cue identifier cannot be standalone \(cue #1\)/);
+  });
+
+  it("should pass with empty blocks/multi empty lines", () => {
+    const input = `
+
+WEBVTT
+
+NOTE Mystuff
+NOTE Profile: webvtt-lssdh-ios8
+NOTE Date: 2019/10/18 05:30:03
+
+NOTE SegmentIndex
+NOTE Segment=581.160 15494@494 80
+NOTE Segment=597.480 38282@15988 185
+NOTE Segment=595.840 36806@54270 179
+NOTE Segment=592.120 15994@91076 81
+NOTE Segment=39.720 1539@107070 8
+NOTE /SegmentIndex
+
+
+
+
+1
+00:02:05.640 --> 00:02:06.480 position:50.00%,middle align:middle size:80.00% line:84.67%
+<c.simplifiedchinese><c.bg_transparent>魏无羡死了</c.bg_transparent></c.simplifiedchinese>
+
+`;
+
+    const result = parseWebVTT(input);
+    expect(result.valid).toBe(true);
+    expect(result.meta).toBeUndefined();
+    expect(result.errors).toHaveLength(0);
   });
 });

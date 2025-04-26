@@ -1,6 +1,6 @@
 {
   "name": "@transcrobes/subs-convert",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Convert subtitles from one format to another",
   "type": "module",
   "main": "dist/subs-convert.cjs",

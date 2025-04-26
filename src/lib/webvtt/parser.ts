@@ -26,7 +26,10 @@ export function parseWebVTT(input: string, options: ParserOptions = {}): ParsedR
   input = input.replace(/\r\n/g, "\n");
   input = input.replace(/\r/g, "\n");
 
-  const parts = input.split("\n\n");
+  const parts = input
+    .split("\n\n")
+    .map((x) => x.trim())
+    .filter(Boolean);
   const header = parts.shift() || "";
 
   if (!header.startsWith("WEBVTT")) {
@@ -49,7 +52,6 @@ export function parseWebVTT(input: string, options: ParserOptions = {}): ParsedR
   if (!meta && headerParts.length > 1 && headerParts[1] !== "") {
     throw new ParserError("Missing blank line after signature");
   }
-
   const { cues, errors } = parseCues(parts, strict);
 
   if (strict && errors.length > 0) {
